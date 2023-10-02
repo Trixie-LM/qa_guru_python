@@ -1,3 +1,5 @@
+import os
+
 from selene.support.shared import browser
 from selene import be, have, command
 
@@ -22,12 +24,15 @@ def test_registration_form():
     browser.element("[class='react-datepicker__day react-datepicker__day--023']").click()
 
     # Subjects
-    # browser.element('#dateOfBirthInput').should(be.blank).click()
+    browser.element('#subjectsInput').should(be.blank).type(
+      'I have many favourite artists. '
+      )
 
     # Hobbies
-    # browser.element('#hobbies-checkbox-1').click()
+    browser.element("label[for='hobbies-checkbox-3']").click()
 
     # Picture
+    browser.element("#uploadPicture").send_keys(os.path.abspath('image/Trixie.jpeg'))
 
     # Current Address
     browser.element('#currentAddress').should(be.blank).type('Sugar Palace, a candy store in Ponyville.')
