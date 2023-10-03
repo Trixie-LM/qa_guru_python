@@ -1,10 +1,13 @@
 import os
 
 from selene.support.shared import browser
-from selene import be, have, command
+from selene import be, have
 
 
 def test_registration_form():
+    # Browser operations
+    browser.open('/automation-practice-form')
+    browser.should(have.title_containing('DEMOQA'))
 
     # firstName
     browser.element('#firstName').should(be.blank).type('Pinkamena')
@@ -27,8 +30,8 @@ def test_registration_form():
 
     # Subjects
     browser.element('#subjectsInput').should(be.blank).type(
-      'I have many favourite artists.'
-    )
+      'Maths'
+    ).press_enter()
 
     # Hobbies
     browser.element("label[for='hobbies-checkbox-3']").click()
@@ -57,7 +60,7 @@ def test_registration_form():
         'Female',
         '9991234567',
         '23 October,2023',
-        '',
+        'Maths',
         'Music',
         'Trixie.jpeg',
         'Sugar Palace, a candy store in Ponyville.',

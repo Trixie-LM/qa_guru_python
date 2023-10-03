@@ -12,10 +12,6 @@ def browser_management():
     browser.config.window_width = 1900
     browser.config.window_height = 1600
     browser.config.timeout = 6.0
-
-    # Browser operations
-    browser.open('/automation-practice-form')
-    browser.should(have.title_containing('DEMOQA'))
     yield
     browser.quit()
 
