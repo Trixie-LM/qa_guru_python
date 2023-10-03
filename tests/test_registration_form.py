@@ -40,11 +40,11 @@ def test_registration_form():
     browser.element('#currentAddress').should(be.blank).type('Sugar Palace, a candy store in Ponyville.')
 
     # State
-    browser.element('.css-19bqh2r').click()
+    browser.element('#state').click()
     browser.element('#react-select-3-option-2').click()
 
     # City
-    browser.element("div[class=' css-1wa3eu0-placeholder']").click()
+    browser.element("#city").click()
     browser.element('#react-select-4-option-1').click()
 
     # Button
