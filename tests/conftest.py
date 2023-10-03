@@ -1,7 +1,6 @@
 import pytest
 from selene.support.shared import browser
-from selene import be, have, command
-from selene.support import by
+from selene import have
 
 
 @pytest.fixture(scope='function', autouse=True)

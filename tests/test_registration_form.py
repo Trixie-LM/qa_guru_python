@@ -8,8 +8,10 @@ def test_registration_form():
 
     # firstName
     browser.element('#firstName').should(be.blank).type('Pinkamena')
+
     # lastName
     browser.element('#lastName').should(be.blank).type('Pie')
+
     # Email
     browser.element('#userEmail').should(be.blank).type('Cakes_and_bakery@mail.com')
 
@@ -25,8 +27,8 @@ def test_registration_form():
 
     # Subjects
     browser.element('#subjectsInput').should(be.blank).type(
-      'I have many favourite artists. '
-      )
+      'I have many favourite artists.'
+    )
 
     # Hobbies
     browser.element("label[for='hobbies-checkbox-3']").click()
@@ -40,6 +42,7 @@ def test_registration_form():
     # State
     browser.element('.css-19bqh2r').click()
     browser.element('#react-select-3-option-2').click()
+
     # City
     browser.element("div[class=' css-1wa3eu0-placeholder']").click()
     browser.element('#react-select-4-option-1').click()
@@ -49,10 +52,14 @@ def test_registration_form():
 
     # Assertions
     browser.all('tbody td:nth-of-type(2)').should(have.exact_texts(
-        'Pinkamena',
-        'Pie',
+        'Pinkamena Pie',
         'Cakes_and_bakery@mail.com',
-        'Pinkamena',
-        'Pie',
-        'Cakes_and_bakery@mail.com'
+        'Female',
+        '9991234567',
+        '23 October,2023',
+        '',
+        'Music',
+        'Trixie.jpeg',
+        'Sugar Palace, a candy store in Ponyville.',
+        'Haryana Panipat'
     ))
