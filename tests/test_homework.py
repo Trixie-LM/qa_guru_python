@@ -61,11 +61,22 @@ def test_find_suitable_user():
     ]
 
     # TODO найдите пользователя с именем "Olga"
-    suitable_users = None
+    # Вариант 1
+    suitable_users = [user for user in users if user["name"] == 'Olga'][0]
+    assert suitable_users == {"name": "Olga", "age": 45}
+
+    # Вариант 2
+    index = 0
+    for i, value in enumerate(users):
+        if value["name"] == 'Olga':
+            index = i
+            break
+    suitable_users = users[index]
     assert suitable_users == {"name": "Olga", "age": 45}
 
     # TODO найдите всех пользователей младше 20 лет
-    suitable_users = None
+    users.sort(key=lambda user: user['age'])
+    suitable_users = users[0:2]
     assert suitable_users == [
         {"name": "Stanislav", "age": 15},
         {"name": "Maria", "age": 18},
