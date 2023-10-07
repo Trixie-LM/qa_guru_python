@@ -8,7 +8,6 @@ def test_dark_theme_by_time():
     start_time = time(hour=22)
     end_time = time(hour=6)
     current_time = time(hour=23)
-    is_dark_theme = None
 
     # TODO переключите темную тему в зависимости от времени суток (с 22 до 6 часов утра - ночь)
     if start_time <= current_time or current_time < end_time:
@@ -31,7 +30,6 @@ def test_dark_theme_by_time_and_user_choice():
     end_time = time(hour=6)
     current_time = time(hour=22)
     dark_theme_enabled_by_user = True
-    is_dark_theme = None
 
     # TODO переключите темную тему в зависимости от времени суток,
     #  но учтите что темная тема может быть включена вручную
