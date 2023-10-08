@@ -1,4 +1,3 @@
-
 import time
 import requests
 from selene import query
@@ -10,10 +9,10 @@ def test_download_file_with_selene_by_href():
 
     href = browser.element("[data-testid='raw-button']").get(query.attribute("href"))
     content = requests.get(href).content
-    with open("pytest_readme.rst", "wb")as f:
+    with open("pytest_readme.rst", "wb") as f:
         f.write(content)
 
-    with open("pytest_readme.rst")as f:
+    with open("pytest_readme.rst") as f:
         text = f.read()
         assert "framework makes it easy to write" in text
 

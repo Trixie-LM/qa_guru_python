@@ -1,7 +1,7 @@
 import pytest
+import os.path
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-import os.path
 
 
 @pytest.fixture
@@ -16,7 +16,9 @@ def our_browser():
         "download.prompt_for_download": False
     }
     options.add_experimental_option("prefs", prefs)
-    service = Service('../chromedriver.exe')
+    service = Service('../resources/chromedriver.exe')
 
     driver = webdriver.Chrome(service=service, options=options)
-    return driver
+    yield
+    # Удаление директории
+    # os.rmdir(os.path.join(currenr_dir, 'tmp'))
