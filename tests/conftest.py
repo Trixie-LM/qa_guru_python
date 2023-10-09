@@ -16,7 +16,7 @@ def our_browser():
         "download.prompt_for_download": False
     }
     options.add_experimental_option("prefs", prefs)
-    service = Service('../resources/chromedriver.exe')
+    service = Service('../chromedriver.exe')
 
     driver = webdriver.Chrome(service=service, options=options)
     yield
