@@ -1,3 +1,7 @@
+from dataclasses import dataclass
+
+
+@dataclass
 class Product:
     """
     Класс продукта
@@ -7,18 +11,15 @@ class Product:
     description: str
     quantity: int
 
-    def __init__(self, name, price, description, quantity):
-        self.name = name
-        self.price = price
-        self.description = description
-        self.quantity = quantity
-
     def check_quantity(self, quantity) -> bool:
         """
         TODO Верните True если количество продукта больше или равно запрашиваемому
             и False в обратном случае
         """
-        raise NotImplementedError
+        if self.quantity >= quantity:
+            return True
+        else:
+            return False
 
     def buy(self, quantity):
         """
@@ -26,7 +27,10 @@ class Product:
             Проверьте количество продукта используя метод check_quantity
             Если продуктов не хватает, то выбросите исключение ValueError
         """
-        raise NotImplementedError
+        if self.check_quantity(quantity):
+            self.quantity = self.quantity - quantity
+        else:
+            raise ValueError(f"Недостаточное количество продукта '{self.name}' для покупки")
 
     def __hash__(self):
         return hash(self.name + self.description)
@@ -73,3 +77,11 @@ class Cart:
         В этом случае нужно выбросить исключение ValueError
         """
         raise NotImplementedError
+
+
+if __name__ == '__main__':
+    books = Product('Книги', 100.00, 'Просто книги, ничего необычного', 30)
+    print(books)
+    print(books.check_quantity(30))
+    print(books.buy(10))
+    print(books)
