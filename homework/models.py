@@ -38,12 +38,6 @@ class Product:
 
 @dataclass
 class Cart:
-    """
-    Класс корзины. В нем хранятся продукты, которые пользователь хочет купить.
-    TODO реализуйте все методы класса
-    """
-    # Словарь продуктов и их количество в корзине
-    grocery_basket: dict[Product, int]
 
     def __init__(self):
         # По-умолчанию корзина пустая
@@ -91,25 +85,3 @@ class Cart:
         for product, quantity in self.grocery_basket.items():
             product.buy(quantity)
         self.grocery_basket.clear()
-
-if __name__ == '__main__':
-    book = Product('Книги', 100.00, 'Просто книги, ничего необычного', 30)
-    toy = Product('Игрушки', 300.00, 'Пони-плюшки', 10)
-    pen = Product('Ручка', 15.00, 'Пони-плюшки', 10000)
-    print(book)
-    print(book.check_quantity(30))
-    print(book.buy(10))
-    print(book)
-    cart = Cart()
-    print(cart)
-
-
-    cart.add_product(book)
-    cart.add_product(book)
-    cart.add_product(book)
-    cart.add_product(toy)
-    cart.add_product(toy)
-    print(cart)
-    print(cart.buy())
-    print(book)
-    print(toy)
