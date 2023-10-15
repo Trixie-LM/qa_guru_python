@@ -3,12 +3,22 @@
 """
 import pytest
 
-from homework.models import Product
+from homework.models import Product, Cart
 
 
 @pytest.fixture
 def product():
     return Product("book", 100, "This is a book", 1000)
+
+
+@pytest.fixture
+def product():
+    return Product('Игрушки', 300.00, 'Пони-плюшки', 10)
+
+
+@pytest.fixture
+def cart():
+    return Cart
 
 
 class TestProducts:
@@ -19,16 +29,21 @@ class TestProducts:
 
     def test_product_check_quantity(self, product):
         # TODO напишите проверки на метод check_quantity
-        pass
+        assert product.check_quantity(999)
+        assert product.check_quantity(1000)
+        assert not product.check_quantity(1001)
 
     def test_product_buy(self, product):
         # TODO напишите проверки на метод buy
-        pass
+        product.buy(1000)
+        assert product.quantity == 0
+        # assert not product.buy(1001)
 
     def test_product_buy_more_than_available(self, product):
         # TODO напишите проверки на метод buy,
         #  которые ожидают ошибку ValueError при попытке купить больше, чем есть в наличии
-        pass
+        with pytest.raises(ValueError):
+            product.buy(1001)
 
 
 class TestCart:
