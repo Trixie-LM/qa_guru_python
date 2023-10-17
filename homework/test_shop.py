@@ -33,12 +33,6 @@ class TestProducts:
         assert book.check_quantity(1000)
         assert not book.check_quantity(1001)
 
-    def test_product_buy(self, book):
-        # TODO напишите проверки на метод buy
-        book.buy(1000)
-        assert book.quantity == 0
-        # assert not book.buy(1001)
-
     def test_product_buy_more_than_available(self, book):
         # TODO напишите проверки на метод buy,
         #  которые ожидают ошибку ValueError при попытке купить больше, чем есть в наличии
@@ -103,3 +97,8 @@ class TestCart:
         assert len(cart.grocery_basket) == 0
         assert book.quantity == 985
         assert toy.quantity == 9
+
+    def test_buy_more_than_available(self, cart, book):
+        cart.add_product(book, 1001)
+        with pytest.raises(ValueError):
+            cart.buy()
