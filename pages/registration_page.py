@@ -76,7 +76,7 @@ class RegistrationPage:
         browser.all('[id^=react-select][id*=option]').element_by(
             have.exact_text(value)).click()
 
-    def click_submit(self, value):
+    def click_submit(self):
         self.submit.click()
 
     def registered_user_data_should(self, full_name, email, gender, number,

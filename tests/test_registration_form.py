@@ -15,11 +15,11 @@ def test_registration_form():
     registration_page.type_first_name('Pinkamena')
     registration_page.type_last_name('Pie')
     registration_page.type_email('Cakes_and_bakery@mail.com')
-    registration_page.click_gender()
+    registration_page.click_gender('male')
     registration_page.type_number('9991234567')
-    registration_page.type_date_of_birth('1', 'September', '2000')
+    registration_page.type_date_of_birth('9', 'August', '2023')
     registration_page.type_subjects('Maths')
-    registration_page.click_hobbies()
+    registration_page.click_hobbies('Music')
     registration_page.download_picture(os.path.abspath('image/Trixie.jpeg'))
     registration_page.type_address('Sugar Palace, a candy store in Ponyville.')
     registration_page.type_state('NCR')
@@ -29,12 +29,12 @@ def test_registration_form():
     registration_page.registered_user_data_should(
         'Pinkamena Pie',
         'Cakes_and_bakery@mail.com',
-        'Female',
+        'Male',
         '9991234567',
-        '23 October,2023',
+        '09 August,2023',
         'Maths',
         'Music',
         'Trixie.jpeg',
         'Sugar Palace, a candy store in Ponyville.',
-        'Haryana Panipat'
+        'NCR Noida'
     )
