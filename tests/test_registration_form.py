@@ -3,58 +3,30 @@ import os
 from selene.support.shared import browser
 from selene import be, have
 
+from pages.registration_page import RegistrationPage
+
+
+registration_page = RegistrationPage()
+
 
 def test_registration_form():
-    # Browser operations
-    browser.open('/automation-practice-form')
-    browser.should(have.title_containing('DEMOQA'))
 
-    # firstName
-    browser.element('#firstName').should(be.blank).type('Pinkamena')
+    registration_page.open()
+    registration_page.type_first_name('Pinkamena')
+    registration_page.type_last_name('Pie')
+    registration_page.type_email('Cakes_and_bakery@mail.com')
+    registration_page.click_gender()
+    registration_page.type_number('9991234567')
+    registration_page.type_date_of_birth('1', 'September', '2000')
+    registration_page.type_subjects('Maths')
+    registration_page.click_hobbies()
+    registration_page.download_picture(os.path.abspath('image/Trixie.jpeg'))
+    registration_page.type_address('Sugar Palace, a candy store in Ponyville.')
+    registration_page.type_state('NCR')
+    registration_page.type_city('Noida')
+    registration_page.click_submit()
 
-    # lastName
-    browser.element('#lastName').should(be.blank).type('Pie')
-
-    # Email
-    browser.element('#userEmail').should(be.blank).type('Cakes_and_bakery@mail.com')
-
-    # Gender
-    browser.element("label[for='gender-radio-2']").click()
-
-    # Phone
-    browser.element('#userNumber').should(be.blank).type('9991234567')
-
-    # Date of Birth
-    browser.element('#dateOfBirthInput').click()
-    browser.element("[class='react-datepicker__day react-datepicker__day--023']").click()
-
-    # Subjects
-    browser.element('#subjectsInput').should(be.blank).type(
-      'Maths'
-    ).press_enter()
-
-    # Hobbies
-    browser.element("label[for='hobbies-checkbox-3']").click()
-
-    # Picture
-    browser.element("#uploadPicture").send_keys(os.path.abspath('image/Trixie.jpeg'))
-
-    # Current Address
-    browser.element('#currentAddress').should(be.blank).type('Sugar Palace, a candy store in Ponyville.')
-
-    # State
-    browser.element('#state').click()
-    browser.element('#react-select-3-option-2').click()
-
-    # City
-    browser.element("#city").click()
-    browser.element('#react-select-4-option-1').click()
-
-    # Button
-    browser.element('#submit').click()
-
-    # Assertions
-    browser.all('tbody td:nth-of-type(2)').should(have.exact_texts(
+    registration_page.registered_user_data_should(
         'Pinkamena Pie',
         'Cakes_and_bakery@mail.com',
         'Female',
@@ -65,4 +37,4 @@ def test_registration_form():
         'Trixie.jpeg',
         'Sugar Palace, a candy store in Ponyville.',
         'Haryana Panipat'
-    ))
+    )
