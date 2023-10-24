@@ -5,6 +5,7 @@ from pages.registration_page import RegistrationPage
 
 registration_page = RegistrationPage()
 
+
 def test_registration_student():
     student = User(
         first_name='Pinkamena',
@@ -17,7 +18,7 @@ def test_registration_student():
         yearofbirth='2023',
         subject='Maths',
         hobbies='Music',
-        picture=os.path.abspath('image/Trixie.jpeg'),
+        picture='Trixie.jpeg',
         address='Sugar Palace, a candy store in Ponyville.',
         state='NCR',
         city='Noida'
