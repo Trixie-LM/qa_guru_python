@@ -5,11 +5,14 @@ from selene.support.shared.jquery_style import s
 
 
 def test_github():
+    browser.config.window_width = 1900
+    browser.config.window_height = 1600
     browser.open("https://github.com")
 
-    s(".header-search-input").click()
-    s(".header-search-input").send_keys("eroshenkoam/allure-example")
-    s(".header-search-input").submit()
+
+    s(".header-search-button").click()
+    s("#query-builder-test").send_keys("eroshenkoam/allure-example")
+    s("#query-builder-test").submit()
 
     s(by.link_text("eroshenkoam/allure-example")).click()
 
