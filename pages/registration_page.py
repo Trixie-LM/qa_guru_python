@@ -48,7 +48,7 @@ class RegistrationPage:
         self.date_of_birth_month.type(month)
         self.date_of_birth_year.type(year)
         browser.element(
-            f'.react-datepicker__day--00{day}:not(.react-datepicker__day--outside-month)'
+            f'.react-datepicker__day--0{day}:not(.react-datepicker__day--outside-month)'
         ).click()
 
     def type_subjects(self, value):
