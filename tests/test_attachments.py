@@ -4,6 +4,7 @@ import allure
 from allure import attachment_type
 
 
+# Вложения, которые отображаются в Allure для большей инфы
 def test_attachments():
     allure.attach("Text content", name="Text", attachment_type=attachment_type.TEXT)
     allure.attach("<h1>Hello, world</h1>", name="Html", attachment_type=attachment_type.HTML)
