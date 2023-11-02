@@ -1,5 +1,5 @@
-import os
 from pages.registration_page import RegistrationPage
+from pathlib import Path
 
 registration_page = RegistrationPage()
 
@@ -14,7 +14,7 @@ def test_registration_form():
     registration_page.type_date_of_birth('23', 'August', '2023')
     registration_page.type_subjects('Maths')
     registration_page.click_hobbies('Music')
-    registration_page.download_picture(os.path.realpath('image/Trixie.jpeg'))
+    registration_page.download_picture(str(Path(__file__).parent.joinpath(f'image/Trixie.jpeg')))
     registration_page.type_address('Sugar Palace, a candy store in Ponyville.')
     registration_page.type_state('NCR')
     registration_page.type_city('Noida')
