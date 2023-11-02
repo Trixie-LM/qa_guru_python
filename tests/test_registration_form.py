@@ -1,4 +1,3 @@
-import os
 from data.users import User
 from pages.registration_page import RegistrationPage
 

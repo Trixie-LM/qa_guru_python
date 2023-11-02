@@ -19,7 +19,8 @@ class RegistrationPage:
         browser.element(f'.react-datepicker__day--0{user.dayofbirth}').click()
         browser.element('#subjectsInput').should(be.visible).type(user.subject).press_enter()
         browser.all('.custom-checkbox').element_by(have.exact_text(user.hobbies)).click()
-        browser.element('#uploadPicture').should(be.visible).type(os.path.realpath(f'image/{user.picture}'))
+        browser.element('#uploadPicture').should(be.visible).type(
+            os.path.join(os.path.dirname(os.path.dirname(str(__file__))), f'tests/image/{user.picture}'))
         browser.element('#currentAddress').should(be.visible).type(user.address)
         browser.element("#react-select-3-input").should(be.visible).type(user.state).press_enter()
         browser.element("#react-select-4-input").should(be.visible).type(user.city).press_enter()
