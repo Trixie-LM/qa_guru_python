@@ -5,7 +5,12 @@ import allure
 registration_page = RegistrationPage()
 
 
-def test_registration_form():
+@allure.title("Successful fill form")
+def test_registration_form(setup_browser):
+    browser = setup_browser
+    first_name = "Trixie"
+    last_name = "Lulamoon"
+
     with allure.step('Open registrations form'):
         registration_page.open()
 
