@@ -1,41 +1,54 @@
-from pages.registration_page import RegistrationPage
-from pathlib import Path
+"""автотест на заполнение и отправку формы
+https://demoqa.com/automation-practice-form """
+from qa_guru_hw_10.registration_page import RegistrationPage
 import allure
 
-registration_page = RegistrationPage()
 
+def test_filling_and_send_form(setup_browser):
+    allure.dynamic.title('Проверка формы регистрации: Student Registration Form')
+    allure.dynamic.tag('Practice Form')
+    allure.dynamic.severity(severity_level='Critical')
+    allure.dynamic.feature('Регистрация студента')
+    allure.dynamic.story('Создаем первую задачу Jenkins')
+    browser = setup_browser
 
-@allure.title("Successful fill form")
-def test_registration_form():
+    registration_page = RegistrationPage(browser)
+    with allure.step('Открываем страницу c формой регистрации'):
+        registration_page.open_form_page()
 
-    with allure.step('Open registrations form'):
-        registration_page.open()
+    with allure.step('Заполняем First Name'):
+        registration_page.fill_first_name('Бобр')
+    with allure.step('Заполняем Last Name'):
+        registration_page.fill_last_name('Добр')
+    with allure.step('Заполняем Email'):
+        registration_page.fill_user_email('bobrdobr@test.ru')
+    with allure.step('Выбираем Gender'):
+        registration_page.fill_gender()
+    with allure.step('Заполняем Mobile Number'):
+        registration_page.fill_mobile_number('1234567890')
+    with allure.step('Заполняем Date of Birth'):
+        registration_page.fill_date_of_birth('2022', 'May', '12')
+    with allure.step('Заполняем Subjects'):
+        registration_page.fill_few_subjects(['English', 'Computer Science'])
+    with allure.step('Заполняем Hobbies'):
+        registration_page.fill_hobbies('Reading')
+    with allure.step('Выбираем и загружаем Picture'):
+        registration_page.add_picture('bobr.jpg')
+    with allure.step('Заполняем Current Address'):
+        registration_page.fill_current_address('Бобриное Болото')
+    with allure.step('Выбираем State and City'):
+        registration_page.fill_state_and_city('Haryana', 'Karnal')
+    with allure.step('Нажимаем кнопку Submit'):
+        registration_page.press_submit()
 
-    with allure.step('Fill form'):
-        registration_page.type_first_name('Pinkamena')
-        registration_page.type_last_name('Pie')
-        registration_page.type_email('Cakes_and_bakery@mail.com')
-        registration_page.click_gender('male')
-        registration_page.type_number('9991234567')
-        registration_page.type_date_of_birth('23', 'August', '2023')
-        registration_page.type_subjects('Maths')
-        registration_page.click_hobbies('Music')
-        registration_page.download_picture(str(Path(__file__).parent.joinpath(f'image/Trixie.jpeg')))
-        registration_page.type_address('Sugar Palace, a candy store in Ponyville.')
-        registration_page.type_state('NCR')
-        registration_page.type_city('Noida')
-        registration_page.click_submit()
-
-    with allure.step("Check form results"):
-        registration_page.registered_user_data_should(
-            'Pinkamena Pie',
-            'Cakes_and_bakery@mail.com',
-            'Male',
-            '9991234567',
-            '23 August,2023',
-            'Maths',
-            'Music',
-            'Trixie.jpeg',
-            'Sugar Palace, a candy store in Ponyville.',
-            'NCR Noida'
-        )
+    with allure.step('Выполняем проверку заполнения полей'):
+        registration_page.assert_have_registered_user('Бобр Добр',
+                                                       'bobrdobr@test.ru',
+                                                       'Male',
+                                                       '1234567890',
+                                                       '12 May,2022',
+                                                       'English, Computer Science',
+                                                       'Reading',
+                                                       'bobr.jpg',
+                                                       'Бобриное Болото',
+                                                       'Haryana Karnal')

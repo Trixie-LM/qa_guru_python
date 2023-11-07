@@ -1,87 +1,75 @@
-from selene import command, have, browser
+"""Класс для страницы регистрации https://demoqa.com/automation-practice-form"""
+from pathlib import Path
+from selene import have, command
 
 
 class RegistrationPage:
-    def __init__(self):
-        self.first_name = browser.element('#firstName')
-        self.last_name = browser.element('#lastName')
-        self.email = browser.element('#userEmail')
-        self.gender = browser.element('label[for="gender-radio-1')
-        self.user_mobile = browser.element('#userNumber')
-        self.date_of_birth_input = browser.element('#dateOfBirthInput')
-        self.date_of_birth_month = browser.element('.react-datepicker__month-select')
-        self.date_of_birth_year = browser.element('.react-datepicker__year-select')
-        self.subjects_input = browser.element('#subjectsInput')
-        self.hobbies = browser.element('//label[. ="Sports"]')
-        self.picture = browser.element('#uploadPicture')
-        self.address = browser.element('#currentAddress')
-        self.state = browser.element('#state')
-        self.state_select = browser.element('#react-select-3-input')
-        self.city = browser.element('#city')
-        self.city_select = browser.element('#react-select-4-input')
-        self.submit = browser.element('#submit')
 
-    def open(self):
-        browser.open('/automation-practice-form')
-        browser.should(have.title_containing('DEMOQA'))
+    def __init__(self, browser):
+        self.browser = browser
 
-    def type_first_name(self, value):
-        self.first_name.type(value)
+    def open_form_page(self) -> None:
+        self.browser.open('/automation-practice-form')
+        self.browser.config.driver.maximize_window()
+        self.browser.all('[id^=google_ads][id$=container__]').with_(timeout=10).wait_until(have.size_greater_than_or_equal(3))
+        self.browser.all('[id^=google_ads][id$=container__]').perform(command.js.remove)
 
-    def type_last_name(self, value):
-        self.last_name.type(value)
+    def fill_first_name(self, value: str) -> None:
+        self.browser.element('#firstName').type(value)
 
-    def type_email(self, value):
-        self.email.type(value)
+    def fill_last_name(self, value: str) -> None:
+        self.browser.element('#lastName').type(value)
 
-    # TODO: Сделать разветвление
-    def click_gender(self, value):
-        self.gender.click()
+    def fill_user_email(self, value: str) -> None:
+        self.browser.element('#userEmail').type(value)
 
-    def type_number(self, value):
-        self.user_mobile.type(value)
+    def fill_gender(self) -> None:
+        self.browser.element('[for="gender-radio-1"]').click()
 
-    # TODO: Проверить
-    def type_date_of_birth(self, day, month, year):
-        self.date_of_birth_input.click()
-        self.date_of_birth_month.type(month)
-        self.date_of_birth_year.type(year)
-        browser.element(
-            f'.react-datepicker__day--0{day}:not(.react-datepicker__day--outside-month)'
-        ).click()
+    def fill_mobile_number(self, value: str) -> None:
+        self.browser.element('#userNumber').type(value)
 
-    def type_subjects(self, value):
-        self.subjects_input.type(value).press_enter()
+    def fill_date_of_birth(self, year: str, month: str, day: str) -> None:
+        self.browser.element('#dateOfBirthInput').click()
+        self.browser.element('.react-datepicker__month-select').type(month)
+        self.browser.element('.react-datepicker__year-select').type(year)
+        self.browser.element(f'.react-datepicker__day--0{day}').click()
 
-    # TODO: Сделать разветвление
-    def click_hobbies(self, value):
-        # browser.element('[for="hobbies-checkbox-1"]').click()
-        browser.all('.custom-checkbox').element_by(have.exact_text(value)).click()
+    def fill_few_subjects(self, value: list) -> None:
+        self.browser.element('#subjectsInput').type(value[0]).press_enter().type(value[1]).press_enter()
 
-    def download_picture(self, file):
-        self.picture.send_keys(file)
+    def fill_hobbies(self, value) -> None:
+        self.browser.all('.custom-control').element_by(have.exact_text(value)).click()
 
-    def type_address(self, value):
-        self.address.type(value)
+    def add_picture(self, value: str) -> None:
+        self.browser.element("#uploadPicture").send_keys(str(Path(__file__).parent.joinpath(f'data/pictures/{value}')))
 
-    def type_state(self, value):
-        self.state.perform(command.js.scroll_into_view)
-        self.state.click()
-        browser.all('[id^=react-select][id*=option]').element_by(
-            have.exact_text(value)).click()
+    def fill_current_address(self, value: str) -> None:
+        self.browser.element('#currentAddress').type(value)
 
-    def type_city(self, value):
-        browser.element('#city').click()
-        browser.all('[id^=react-select][id*=option]').element_by(
-            have.exact_text(value)).click()
+    def fill_state_and_city(self, state: str, city: str) -> None:
+        self.browser.element("#state").perform(command.js.scroll_into_view)
+        self.browser.element("#state").click()
+        self.browser.all('[id^="react-select"][id*=option]').element_by(have.exact_text(state)).click()
+        self.browser.element("#city").click()
+        self.browser.all('[id^="react-select"][id*=option]').element_by(have.exact_text(city)).click()
 
-    def click_submit(self):
-        self.submit.click()
+    def press_submit(self) -> None:
+        self.browser.element('#submit').perform(command.js.click)
 
-    def registered_user_data_should(self, full_name, email, gender, number,
-                                    date, subject, hobbie, file, address, state_city):
-        browser.element('.table').all('td').even.should(
+    def assert_have_registered_user(self, full_name, email, gender, mobile_number, date_of_birth, subjects,
+                                     hobbies, picture, current_address, state_and_city):
+        self.browser.element('.table').all('td').even.should(
             have.exact_texts(
-                full_name, email, gender, number, date, subject, hobbie, file, address, state_city,
+                full_name,
+                email,
+                gender,
+                mobile_number,
+                date_of_birth,
+                subjects,
+                hobbies,
+                picture,
+                current_address,
+                state_and_city
             )
         )
