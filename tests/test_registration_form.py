@@ -1,6 +1,6 @@
 """автотест на заполнение и отправку формы
 https://demoqa.com/automation-practice-form """
-from qa_guru_hw_10.registration_page import RegistrationPage
+from pages.registration_page import RegistrationPage
 import allure
 
 
